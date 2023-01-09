@@ -79,6 +79,7 @@ namespace aspnet_core_dotnet_core
             });
 
             app.UseEndpoints(endpoints => {
+                endpoints.MapRazorPages();
                 endpoints.MapControllers();
             });
         }
