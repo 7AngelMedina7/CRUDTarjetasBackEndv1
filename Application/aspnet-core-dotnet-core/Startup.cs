@@ -33,13 +33,7 @@ namespace aspnet_core_dotnet_core
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "FBTarjeta", Version = "v1" });
             });
 
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-
-            });
+            
 
             services.AddDbContext<AplicationDbContext>(options => {
                 options.UseSqlServer(Configuration.GetConnectionString("defaultConnection"));
@@ -49,7 +43,7 @@ namespace aspnet_core_dotnet_core
             services.AddCors(options => options.AddPolicy("AllowWebApp",
                                                     builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
         
-        services.AddRazorPages();
+        //services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,24 +52,24 @@ namespace aspnet_core_dotnet_core
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "FBTarjeta v1"));
             }
             else
             {
                 app.UseExceptionHandler("/Error");
             }
             app.UseCors("AllowWebApp");
-            app.UseStaticFiles();
-            app.UseCookiePolicy();
+            app.UseHttpsRedirection();
+
+           // app.UseStaticFiles();
+            //app.UseCookiePolicy();
             app.UseRouting();
             app.UseAuthorization();
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Foo API V1");
-            });
+            
 
             app.UseEndpoints(endpoints => {
-                endpoints.MapRazorPages();
+                endpoints.MapControllers();
             });
         }
        

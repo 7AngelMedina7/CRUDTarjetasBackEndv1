@@ -17,7 +17,7 @@ namespace aspnet_core_dotnet_core.Controllers
         }
         // GET: api/<TarjetaController>
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetAll()
         {
             try
             {
@@ -26,7 +26,7 @@ namespace aspnet_core_dotnet_core.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.Message+"qa");
             }
         }
 
